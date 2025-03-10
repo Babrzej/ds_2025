@@ -1,5 +1,5 @@
-# ds_2025
+Team Leader: Błażej Pituła\
+Collaborator: Adam Piotrowski
 
-Repository for Descriptive Statistics Course on second semester of Data Engineering on Gdańsk University of Technology
+# Reports:
 
-test push
