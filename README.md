@@ -1,5 +1,4 @@
-Team Leader: Błażej Pituła\
+Team Leader: Błażej Pituła
 Collaborator: Adam Piotrowski
 
 # Reports:
-
