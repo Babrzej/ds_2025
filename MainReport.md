@@ -5,4 +5,4 @@ Collaborator: Adam Piotrowski
 
 [Report 1](Report_1.md)
 
-[Report 2](Adam's_Report_2.md)
+[Report 2](Report_2.md)
