@@ -3,6 +3,6 @@ Collaborator: Adam Piotrowski
 
 # Reports:
 
-[Report 1](Report_1.md)
+[Report 1](Reports/Report_1.md)
 
-[Report 2](Report_2.md)
+[Report 2](Reports/Report_2.md)
