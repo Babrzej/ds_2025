@@ -236,18 +236,7 @@ users.tail(10)
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -433,18 +422,7 @@ users.describe()
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -497,18 +475,7 @@ users.describe(include='object')
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -654,18 +621,7 @@ discipline
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -784,18 +740,7 @@ discipline.sort_values(by=['Red Cards', 'Yellow Cards'], ascending=False)
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -922,18 +867,7 @@ euro12[euro12['Goals']>6]
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -1023,18 +957,7 @@ euro12[euro12['Team'].str.startswith('G')]
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -1124,18 +1047,7 @@ euro12.iloc[:, :7]
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -1322,18 +1234,7 @@ euro12.iloc[:, :-3]
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -1759,18 +1660,7 @@ euro12[euro12['Team'].isin(['England', 'Italy', 'Russia'])][['Team', 'Shooting A
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -1831,18 +1721,7 @@ drinks
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -1981,18 +1860,7 @@ drinks.groupby('continent')['wine_servings'].describe()
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -2086,18 +1954,7 @@ drinks.groupby('continent').mean(numeric_only=True)
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -2163,18 +2020,7 @@ drinks.groupby('continent').median(numeric_only=True)
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
@@ -2247,18 +2093,7 @@ summary
 ```
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }`</style>`
 
 <table border="1" class="dataframe">
   <thead>
