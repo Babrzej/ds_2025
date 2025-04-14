@@ -1760,7 +1760,7 @@ msno.heatmap(carseats)
 
 
     
-![png](Exercise_4_files/Exercise_4_100_2.png)
+![png](./Exercise_4_files/Exercise_4_100_2.png)
     
 
 
