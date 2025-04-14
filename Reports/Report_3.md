@@ -2,7 +2,7 @@
 
 ## Handling Missing Values in Python
 
-![Missing values](missing.png)
+"![Missing values](missing.png)"
 
 Real world data is messy and often contains a lot of missing values. 
 
