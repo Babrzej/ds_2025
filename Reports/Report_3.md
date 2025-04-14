@@ -4,22 +4,21 @@
 
 ![Missing values](missing.png)
 
-Real world data is messy and often contains a lot of missing values. 
+Real world data is messy and often contains a lot of missing values.
 
 There could be multiple reasons for the missing values but primarily the reason for missingness can be attributed to:
 
-| Reason for missing Data | 
-| :-----------: | 
-| Data doesn't exist |
-| Data not collected due to human error. | 
-| Data deleted accidently |
+|        Reason for missing Data        |
+| :------------------------------------: |
+|           Data doesn't exist           |
+| Data not collected due to human error. |
+|        Data deleted accidently        |
 
-## A guide to handling missing values 
+## A guide to handling missing values
 
 Please read this tutorial on handling missing values first, before working on dirty data this week: [TUTORIAL](a_guide_to_na.ipynb).
 
 # Dirty data
-
 
 ```python
 import pandas as pd
@@ -37,7 +36,6 @@ from io import StringIO
 
 Load the dataset from the provided URL using pandas.
 
-
 ```python
 url = "https://raw.github.com/edwindj/datacleaning/master/data/dirty_iris.csv"
 response = requests.get(url, verify=False)
@@ -46,18 +44,16 @@ dirty_iris = pd.read_csv(data, sep=",")
 print(dirty_iris.head())
 ```
 
-       Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
+    Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
     0           6.4          3.2           4.5          1.5  versicolor
     1           6.3          3.3           6.0          2.5   virginica
     2           6.2          NaN           5.4          2.3   virginica
     3           5.0          3.4           1.6          0.4      setosa
     4           5.7          2.6           3.5          1.0  versicolor
 
-
 ## Introduce Missing Values
 
 Randomly introduce missing values into the dataset to mimic the Python code behavior.
-
 
 ```python
 # Load additional data
@@ -88,18 +84,13 @@ Analysis of data is a process of inspecting, cleaning, transforming, and modelin
 
 Many times in the beginning we spend hours on handling problems with missing values, logical inconsistencies or outliers in our datasets. In this tutorial we will go through the most popular techniques in data cleansing.
 
-
 We will be working with the messy dataset `iris`. Originally published at UCI Machine Learning Repository: Iris Data Set, this small dataset from 1936 is often used for testing out machine learning algorithms and visualizations. Each row of the table represents an iris flower, including its species and dimensions of its botanical parts, sepal and petal, in centimeters.
 
 Take a look at this dataset here:
 
-
 ```python
 dirty_iris
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -113,8 +104,8 @@ dirty_iris
 
     .dataframe thead th {
         text-align: right;
-    }
-</style>
+    }`</style>`
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -220,18 +211,13 @@ dirty_iris
 <p>150 rows × 5 columns</p>
 </div>
 
-
-
 ## Detecting NA
 
 A missing value, represented by NaN in Python, is a placeholder for a datum of which the type is known but its value isn't. Therefore, it is impossible to perform statistical analysis on data where one or more values in the data are missing. One may choose to either omit elements from a dataset that contain missing values or to impute a value, but missingness is something to be dealt with prior to any analysis.
 
-
 ![Descriptive Statistics](images/ds.png)
 
 Can you see that many values in our dataset have status NaN = Not Available? Count (or plot), how many (%) of all 150 rows is complete.
-
-
 
 ```python
 # Count the number of complete cases (rows without any missing values)
@@ -247,9 +233,7 @@ print(f"Percentage of complete cases: {percentage_complete:.2f}%")
     Number of complete cases: 96
     Percentage of complete cases: 64.00%
 
-
 Does the data contain other special values? If it does, replace them with NA.
-
 
 ```python
 # Define a function to check for special values
@@ -267,7 +251,7 @@ for col in dirty_iris.columns:
 print(dirty_iris.describe(include='all'))
 ```
 
-            Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
+    Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
     count     140.000000   133.000000    131.000000   137.000000         150
     unique           NaN          NaN           NaN          NaN           3
     top              NaN          NaN           NaN          NaN  versicolor
@@ -280,7 +264,6 @@ print(dirty_iris.describe(include='all'))
     75%         6.400000     3.300000      5.100000     1.800000         NaN
     max        73.000000    30.000000     63.000000     2.500000         NaN
 
-
 ## Checking consistency
 
 Consistent data are technically correct data that are fit for statistical analysis. They are data in which missing values, special values, (obvious) errors and outliers are either removed, corrected or imputed. The data are consistent with constraints based on real-world knowledge about the subject that the data describe.
@@ -289,18 +272,13 @@ Consistent data are technically correct data that are fit for statistical analys
 
 We have the following background knowledge:
 
--   Species should be one of the following values: setosa, versicolor or virginica.
-
--   All measured numerical properties of an iris should be positive.
-
--   The petal length of an iris is at least 2 times its petal width.
-
--   The sepal length of an iris cannot exceed 30 cm.
-
--   The sepals of an iris are longer than its petals.
+- Species should be one of the following values: setosa, versicolor or virginica.
+- All measured numerical properties of an iris should be positive.
+- The petal length of an iris is at least 2 times its petal width.
+- The sepal length of an iris cannot exceed 30 cm.
+- The sepals of an iris are longer than its petals.
 
 Define these rules in a separate object 'RULES' and read them into Python. Print the resulting constraint object.
-
 
 ```python
 # Define the rules as functions
@@ -334,9 +312,7 @@ for rule, result in rules.items():
     Petal.Length >= 2 * Petal.Width: False
     Sepal.Length > Petal.Length: False
 
-
 Now we are ready to determine how often each rule is broken (violations). Also we can summarize and plot the result.
-
 
 ```python
 # Check for rule violations
@@ -361,9 +337,7 @@ for rule, count in summary.items():
     Petal.Length >= 2 * Petal.Width: 34 violations
     Sepal.Length > Petal.Length: 30 violations
 
-
 What percentage of the data has no errors?
-
 
 ```python
 import matplotlib.pyplot as plt
@@ -384,14 +358,9 @@ for p in ax.patches:
 plt.show()
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_29_0.png)
-    
-
+![png](Report_3_files/Report_3_29_0.png)
 
 Find out which observations have too long sepals using the result of violations.
-
 
 ```python
 # Check for rule violations
@@ -402,7 +371,7 @@ violated_rows = dirty_iris[violated_df["Sepal.Length <= 30"]]
 print(violated_rows)
 ```
 
-         Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
+    Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
     14            NaN          3.9          1.70          0.4      setosa
     18            NaN          4.0           NaN          0.2      setosa
     24            NaN          3.0          5.90          2.1   virginica
@@ -416,9 +385,7 @@ print(violated_rows)
     124          49.0         30.0         14.00          2.0      setosa
     137           NaN          3.0          4.90          1.8   virginica
 
-
 Find outliers in sepal length using boxplot approach. Retrieve the corresponding observations and look at the other values. Any ideas what might have happened? Set the outliers to NA (or a value that you find more appropiate)
-
 
 ```python
 # Boxplot for Sepal.Length
@@ -429,12 +396,7 @@ plt.ylabel('Sepal Length')
 plt.show()
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_33_0.png)
-    
-
-
+![png](Report_3_files/Report_3_33_0.png)
 
 ```python
 # Find outliers in Sepal.Length
@@ -451,9 +413,7 @@ print(dirty_iris.loc[outliers_idx])
     27           73.0         29.0          63.0          NaN  virginica
     124          49.0         30.0          14.0          2.0     setosa
 
-
 They all seem to be too big... may they were measured in mm i.o cm?
-
 
 ```python
 # Adjust the outliers (assuming they were measured in mm instead of cm)
@@ -475,10 +435,7 @@ print(dirty_iris.describe())
     75%        6.400000     3.300000      5.100000     1.800000
     max        7.900000     4.200000     23.000000     2.500000
 
-
-
 Note that simple boxplot shows an extra outlier!
-
 
 ```python
 import seaborn as sns
@@ -490,16 +447,11 @@ plt.ylabel('Sepal Length')
 plt.show()
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_38_0.png)
-    
-
+![png](Report_3_files/Report_3_38_0.png)
 
 ## Correcting
 
 Replace non positive values from Sepal.Width with NA:
-
 
 ```python
 # Define the correction rule
@@ -514,7 +466,7 @@ mydata_corrected = correct_sepal_width(dirty_iris)
 print(mydata_corrected)
 ```
 
-         Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
+    Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
     0             6.4          3.2           4.5          1.5  versicolor
     1             6.3          3.3           6.0          2.5   virginica
     2             6.2          NaN           5.4          2.3   virginica
@@ -526,12 +478,10 @@ print(mydata_corrected)
     147           5.2          3.5           1.5          0.2      setosa
     148           6.4          3.1           NaN          1.8   virginica
     149           5.8          2.6           4.0          NaN  versicolor
-    
+
     [150 rows x 5 columns]
 
-
 Replace all erroneous values with NA using (the result of) localizeErrors:
-
 
 ```python
 # Apply the rules to the dataframe
@@ -548,7 +498,6 @@ for col in violated_df.columns:
 
 Here we are going to use **missingno** library to diagnose the missingness pattern for the 'dirty_iris' dataset.
 
-
 ```python
 import missingno as msno
 ```
@@ -558,19 +507,14 @@ import missingno as msno
 This visualization shows which values are missing in each column. Each bar represents a column, and white spaces in the bars indicate missing values.
 
 If you see many white spaces in one column, it means that column has a lot of missing data.
-If the white spaces are randomly scattered, the missing data might be random. 
+If the white spaces are randomly scattered, the missing data might be random.
 If they are clustered in specific areas, it might indicate a pattern.
-
 
 ```python
 msno.matrix(dirty_iris);
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_46_0.png)
-    
-
+![png](Report_3_files/Report_3_46_0.png)
 
 ### Heatmap Plot (msno.heatmap):
 
@@ -579,16 +523,11 @@ If two columns have a high correlation (dark colors), it means that if one colum
 
 Low correlations (light colors) indicate that missing values in one column are not related to missing values in another column.
 
-
 ```python
 msno.heatmap(dirty_iris);
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_48_0.png)
-    
-
+![png](Report_3_files/Report_3_48_0.png)
 
 ### Dendrogram Plot (msno.dendrogram):
 
@@ -599,16 +538,11 @@ This can help identify groups of columns that have similar issues with missing d
 
 Based on these visualizations, we can identify which columns have the most missing data, whether the missing data is random or patterned, and which columns have similar patterns of missing data.
 
-
 ```python
 msno.dendrogram(dirty_iris);
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_50_0.png)
-    
-
+![png](Report_3_files/Report_3_50_0.png)
 
 *Based on the dendrogram plot, we can interpret the pattern of missing data in the "dirty iris" dataset as follows:*
 
@@ -634,38 +568,29 @@ Similarly, missing data in "Sepal.Width" is likely to be associated with missing
 
 Imputation is the process of estimating or deriving values for fields where data is missing. There is a vast body of literature on imputation methods and it goes beyond the scope of this tutorial to discuss all of them.
 
-There is no one single best imputation method that works in all cases. The imputation model of choice depends on what auxiliary information is available and whether there are (multivariate) edit restrictions on the data to be imputed. 
+There is no one single best imputation method that works in all cases. The imputation model of choice depends on what auxiliary information is available and whether there are (multivariate) edit restrictions on the data to be imputed.
 
 The availability of Python software for imputation under edit restrictions is, to our best knowledge, limited. However, a viable strategy for imputing numerical data is to first impute missing values without restrictions, and then minimally adjust the imputed values so that the restrictions are obeyed. Separately, these methods are available in Python.
 
 We can mention several approaches to imputation:
 
-1.  For the **quantitative** variables:
+1. For the **quantitative** variables:
 
--   imputing by **mean**/**median**/**mode**
+- imputing by **mean**/**median**/**mode**
+- **hotdeck** imputation
+- **KNN** -- K-nearest-neighbors approach
+- **RPART** -- random forests multivariate approach
+- **mice** - Multivariate Imputation by Chained Equations approach
 
--   **hotdeck** imputation
+2. For the **qualitative** variables:
 
--   **KNN** -- K-nearest-neighbors approach
+- imputing by **mode**
+- **RPART** -- random forests multivariate approach
+- **mice** - Multivariate Imputation by Chained Equations approach
 
--   **RPART** -- random forests multivariate approach
-
--   **mice** - Multivariate Imputation by Chained Equations approach
-
-2.  For the **qualitative** variables:
-
--   imputing by **mode**
-
--   **RPART** -- random forests multivariate approach
-
--   **mice** - Multivariate Imputation by Chained Equations approach
-
-    ... and many others. Please read the theoretical background if you are interested in those techniques.
-
-
+  ... and many others. Please read the theoretical background if you are interested in those techniques.
 
 ***Exercise 1.*** Use ***kNN*** imputation ('sklearn' package) to impute all missing values. The KNNImputer from sklearn requires all data to be numeric. Since our dataset contains categorical data (e.g., the Species column), you need to handle these columns separately. One approach is to use one-hot encoding for categorical variables before applying the imputer.
-
 
 ```python
 from sklearn.impute import KNNImputer
@@ -703,7 +628,7 @@ final_imputed_data = pd.concat([imputed_df[numeric_cols], decoded_categorical], 
 print(final_imputed_data)
 ```
 
-         Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
+    Sepal.Length  Sepal.Width  Petal.Length  Petal.Width     Species
     0        6.400000     3.200000      4.500000     1.500000  versicolor
     1        6.300000     3.300000      6.000000     2.500000   virginica
     2        6.200000     3.033333      5.400000     2.300000   virginica
@@ -715,9 +640,8 @@ print(final_imputed_data)
     147      5.200000     3.500000      1.500000     0.200000      setosa
     148      6.533333     3.100000      5.166667     1.800000   virginica
     149      5.800000     2.600000      3.833333     1.066667  versicolor
-    
-    [150 rows x 5 columns]
 
+    [150 rows x 5 columns]
 
 ## Transformations
 
@@ -725,20 +649,18 @@ Finally, we sometimes encounter the situation where we have problems with skewed
 
 First, standardization (also known as normalization):
 
--   **Z-score** approach - standardization procedure, using the formula: $z=\frac{x-\mu}{\sigma}$ where $\mu$ = mean and $\sigma$ = standard deviation. Z-scores are also known as standardized scores; they are scores (or data values) that have been given a common *standard*. This standard is a mean of zero and a standard deviation of 1.
-
--   **minmax** approach - An alternative approach to Z-score normalization (or standardization) is the so-called MinMax scaling (often also simply called "normalization" - a common cause for ambiguities). In this approach, the data is scaled to a fixed range - usually 0 to 1. The cost of having this bounded range - in contrast to standardization - is that we will end up with smaller standard deviations, which can suppress the effect of outliers. If you would like to perform MinMax scaling - simply substract minimum value and divide it by range:$(x-min)/(max-min)$
+- **Z-score** approach - standardization procedure, using the formula: $z=\frac{x-\mu}{\sigma}$ where $\mu$ = mean and $\sigma$ = standard deviation. Z-scores are also known as standardized scores; they are scores (or data values) that have been given a common *standard*. This standard is a mean of zero and a standard deviation of 1.
+- **minmax** approach - An alternative approach to Z-score normalization (or standardization) is the so-called MinMax scaling (often also simply called "normalization" - a common cause for ambiguities). In this approach, the data is scaled to a fixed range - usually 0 to 1. The cost of having this bounded range - in contrast to standardization - is that we will end up with smaller standard deviations, which can suppress the effect of outliers. If you would like to perform MinMax scaling - simply substract minimum value and divide it by range:$(x-min)/(max-min)$
 
 In order to solve problems with very skewed distributions we can also use several types of simple transformations:
 
--   log
--   log+1
--   sqrt
--   x\^2
--   x\^3
+- log
+- log+1
+- sqrt
+- x\^2
+- x\^3
 
 ***Exercise 2.*** Standardize incomes and present the transformed distribution of incomes on boxplot.
-
 
 ```python
 inc = carseats["Income"]
@@ -750,28 +672,19 @@ sns.boxplot(data=stdIncome)
 plt.show()
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_58_0.png)
-    
-
+![png](Report_3_files/Report_3_58_0.png)
 
 ## Binning
 
 Sometimes we just would like to perform so called 'binning' procedure to be able to analyze our categorical data, to compare several categorical variables, to construct statistical models etc. Thanks to the 'binning' function we can transform quantitative variables into categorical using several methods:
 
--   **quantile** - automatic binning by quantile of its distribution
-
--   **equal** - binning to achieve fixed length of intervals
-
--   **pretty** - a compromise between the 2 mentioned above
-
--   **kmeans** - categorization using the K-Means algorithm
-
--   **bclust** - categorization using the bagged clustering algorithm
+- **quantile** - automatic binning by quantile of its distribution
+- **equal** - binning to achieve fixed length of intervals
+- **pretty** - a compromise between the 2 mentioned above
+- **kmeans** - categorization using the K-Means algorithm
+- **bclust** - categorization using the bagged clustering algorithm
 
 **Exercise 3.** Using quantile approach perform binning of the variable 'Income'.
-
 
 ```python
 binnedInc = pd.qcut(inc, q = 4, labels = ["25th", "50th", "75th", "100th"])
@@ -780,15 +693,9 @@ sns.countplot( data=binnedInc)
 plt.show()
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_61_0.png)
-    
-
+![png](Report_3_files/Report_3_61_0.png)
 
 **Exercise 4.** Recode the original distribution of incomes using fixed length of intervals and assign them labels.
-
-
 
 ```python
 binnedInc = pd.cut(inc, bins=5, labels= ['1', '2', '3', '4', '5'])
@@ -797,18 +704,13 @@ sns.countplot(data=binnedInc)
 plt.show()
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_63_0.png)
-    
-
+![png](Report_3_files/Report_3_63_0.png)
 
 In case of statistical modeling (i.e. credit scoring purposes) - we need to be aware of the fact, that the ***optimal*** discretization of the original distribution must be achieved. The '*binning_by*' function comes with some help here.
 
 ## Optimal binning with binary target
 
 **Exercise 5.** Perform discretization of the variable 'Advertising' using optimal binning.
-
 
 ```python
 from optbinning import OptimalBinning
@@ -820,7 +722,6 @@ df = pd.DataFrame(data.data, columns=data.feature_names)
 
 We choose a variable to discretize and the binary target.
 
-
 ```python
 variable = "mean radius"
 x = df[variable].values
@@ -829,22 +730,17 @@ y = data.target
 
 Import and instantiate an OptimalBinning object class. We pass the variable name, its data type, and a solver, in this case, we choose the constraint programming solver.
 
-
 ```python
 optb = OptimalBinning(name=variable, dtype="numerical", solver="cp")
 ```
 
 We fit the optimal binning object with arrays x and y.
 
-
 ```python
 optb.fit(x, y)
 ```
 
-
-
-
-<style>#sk-container-id-1 {
+<style>#sk-container-id-5 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
   --sklearn-color-text-muted: #666;
@@ -875,15 +771,15 @@ optb.fit(x, y)
   }
 }
 
-#sk-container-id-1 {
+#sk-container-id-5 {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-1 pre {
+#sk-container-id-5 pre {
   padding: 0;
 }
 
-#sk-container-id-1 input.sk-hidden--visually {
+#sk-container-id-5 input.sk-hidden--visually {
   border: 0;
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
@@ -895,7 +791,7 @@ optb.fit(x, y)
   width: 1px;
 }
 
-#sk-container-id-1 div.sk-dashed-wrapped {
+#sk-container-id-5 div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -903,7 +799,7 @@ optb.fit(x, y)
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-1 div.sk-container {
+#sk-container-id-5 div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -913,7 +809,7 @@ optb.fit(x, y)
   position: relative;
 }
 
-#sk-container-id-1 div.sk-text-repr-fallback {
+#sk-container-id-5 div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -929,14 +825,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-1 div.sk-parallel-item::after {
+#sk-container-id-5 div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-1 div.sk-parallel {
+#sk-container-id-5 div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -944,28 +840,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-1 div.sk-parallel-item {
+#sk-container-id-5 div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
+#sk-container-id-5 div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
+#sk-container-id-5 div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
+#sk-container-id-5 div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-1 div.sk-serial {
+#sk-container-id-5 div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -983,14 +879,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-1 div.sk-toggleable {
+#sk-container-id-5 div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
+#sk-container-id-5 label.sk-toggleable__label {
   cursor: pointer;
   display: flex;
   width: 100%;
@@ -1003,13 +899,13 @@ clickable and can be expanded/collapsed.
   gap: 0.5em;
 }
 
-#sk-container-id-1 label.sk-toggleable__label .caption {
+#sk-container-id-5 label.sk-toggleable__label .caption {
   font-size: 0.6rem;
   font-weight: lighter;
   color: var(--sklearn-color-text-muted);
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+#sk-container-id-5 label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -1017,13 +913,13 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+#sk-container-id-5 label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-1 div.sk-toggleable__content {
+#sk-container-id-5 div.sk-toggleable__content {
   max-height: 0;
   max-width: 0;
   overflow: hidden;
@@ -1032,12 +928,12 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted {
+#sk-container-id-5 div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content pre {
+#sk-container-id-5 div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -1045,79 +941,79 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+#sk-container-id-5 div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+#sk-container-id-5 input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   max-height: 200px;
   max-width: 100%;
   overflow: auto;
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+#sk-container-id-5 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-5 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-5 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-5 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-5 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
+#sk-container-id-5 div.sk-label label.sk-toggleable__label,
+#sk-container-id-5 div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+#sk-container-id-5 div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+#sk-container-id-5 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-1 div.sk-label label {
+#sk-container-id-5 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   display: inline-block;
   line-height: 1.2em;
 }
 
-#sk-container-id-1 div.sk-label-container {
+#sk-container-id-5 div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
+#sk-container-id-5 div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -1127,18 +1023,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted {
+#sk-container-id-5 div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
+#sk-container-id-5 div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted:hover {
+#sk-container-id-5 div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -1226,7 +1122,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-1 a.estimator_doc_link {
+#sk-container-id-5 a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -1241,61 +1137,46 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted {
+#sk-container-id-5 a.estimator_doc_link.fitted {
   /* fitted */
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
   color: var(--sklearn-color-fitted-level-1);
 }
 
 /* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
+#sk-container-id-5 a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+#sk-container-id-5 a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>OptimalBinning(name=&#x27;mean radius&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OptimalBinning</div></div><div><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content "><pre>OptimalBinning(name=&#x27;mean radius&#x27;)</pre></div> </div></div></div></div>
-
-
+</style><div id="sk-container-id-5" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>OptimalBinning(name='mean radius')</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" checked><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OptimalBinning</div></div><div><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content "><pre>OptimalBinning(name='mean radius')</pre></div> </div></div></div></div>
 
 You can check if an optimal solution has been found via the status attribute:
-
 
 ```python
 optb.status
 ```
 
-
-
-
     'OPTIMAL'
 
-
-
 You can also retrieve the optimal split points via the splits attribute:
-
 
 ```python
 optb.splits
 ```
 
-
-
-
     array([11.42500019, 12.32999992, 13.09499979, 13.70499992, 15.04500008,
            16.92500019])
-
-
 
 The binning table
 
 The optimal binning algorithms return a binning table; a binning table displays the binned data and several metrics for each bin. Class OptimalBinning returns an object BinningTable via the binning_table attribute.
-
 
 ```python
 binning_table = optb.binning_table
@@ -1303,22 +1184,13 @@ binning_table = optb.binning_table
 type(binning_table)
 ```
 
-
-
-
     optbinning.binning.binning_statistics.BinningTable
 
-
-
 The binning_table is instantiated, but not built. Therefore, the first step is to call the method build, which returns a pandas.DataFrame.
-
 
 ```python
 binning_table.build()
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -1332,8 +1204,8 @@ binning_table.build()
 
     .dataframe thead th {
         text-align: right;
-    }
-</style>
+    }`</style>`
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1474,44 +1346,32 @@ binning_table.build()
 </table>
 </div>
 
-
-
 Let’s describe the columns of this binning table:
 
-Bin: the intervals delimited by the optimal split points.  
-Count: the number of records for each bin.  
-Count (%): the percentage of records for each bin.  
-Non-event: the number of non-event records (𝑦=0) for each bin.  
-Event: the number of event records (𝑦=1) for each bin.  
-Event rate: the percentage of event records for each bin.  
-WoE: the Weight-of-Evidence for each bin.  
-IV: the Information Value (also known as Jeffrey’s divergence) for each bin.  
-JS: the Jensen-Shannon divergence for each bin.  
-The last row shows the total number of records, non-event records, event records, and IV and JS.    
+Bin: the intervals delimited by the optimal split points.
+Count: the number of records for each bin.
+Count (%): the percentage of records for each bin.
+Non-event: the number of non-event records (𝑦=0) for each bin.
+Event: the number of event records (𝑦=1) for each bin.
+Event rate: the percentage of event records for each bin.
+WoE: the Weight-of-Evidence for each bin.
+IV: the Information Value (also known as Jeffrey’s divergence) for each bin.
+JS: the Jensen-Shannon divergence for each bin.
+The last row shows the total number of records, non-event records, event records, and IV and JS.
 
 You can use the method plot to visualize the histogram and WoE or event rate curve. Note that the Bin ID corresponds to the binning table index.
-
 
 ```python
 binning_table.plot(metric="woe")
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_84_0.png)
-    
-
-
+![png](Report_3_files/Report_3_84_0.png)
 
 ```python
 binning_table.plot(metric="event_rate")
 ```
 
-
-    
-![png](Exercise_4_files/Exercise_4_85_0.png)
-    
-
+![png](Report_3_files/Report_3_85_0.png)
 
 Note that WoE is inversely related to the event rate, i.e., a monotonically ascending event rate ensures a monotonically descending WoE and vice-versa. We will see more monotonic trend options in the advanced tutorial.
 
@@ -1521,20 +1381,15 @@ Read more here: [https://gnpalencia.org/optbinning/tutorials/tutorial_binary.htm
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Wdvwer7h-8w?si=pVqCbOXb4CaCsmnJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-**Exercise 6.** Your turn! 
+**Exercise 6.** Your turn!
 
 Work with the 'carseats' dataset, find the best way to perform full diagnostic (dirty data, outliers, missing values). Fix problems.
 
 #### First let's check for dirty data
 
-
-
 ```python
 carseats.describe()
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -1548,8 +1403,8 @@ carseats.describe()
 
     .dataframe thead th {
         text-align: right;
-    }
-</style>
+    }`</style>`
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1657,15 +1512,9 @@ carseats.describe()
 </table>
 </div>
 
-
-
-
 ```python
 carseats.dtypes
 ```
-
-
-
 
     Sales          float64
     CompPrice        int64
@@ -1680,11 +1529,9 @@ carseats.dtypes
     US              object
     dtype: object
 
+#### Types make sense so we can go on,
 
-
-#### Types make sense so we can go on,  
 #### Let's check for incorrect values like negative prices or incorrectly typed qualitative values
-
 
 ```python
 num_cols = carseats.select_dtypes(include=[np.number]).columns
@@ -1704,8 +1551,6 @@ for col in num_cols:
     Age: tidy
     Education: tidy
 
-
-
 ```python
 print(carseats['Urban'].unique())
 print(carseats['ShelveLoc'].unique())
@@ -1716,9 +1561,7 @@ print(carseats['US'].unique())
     ['Bad' 'Good' 'Medium']
     ['Yes' 'No']
 
-
 #### Let's see if there are duplicates
-
 
 ```python
 print(carseats.duplicated().sum())
@@ -1726,10 +1569,9 @@ print(carseats.duplicated().sum())
 
     0
 
+#### There are no duplicates so `<br/>`
 
-#### There are no duplicates so <br/>
 #### Now let's check for missing values
-
 
 ```python
 print(carseats.isnull().sum())
@@ -1750,22 +1592,11 @@ msno.heatmap(carseats)
     US              0
     dtype: int64
 
-
-
-
-
     <Axes: >
 
-
-
-
-    
-![png](Exercise_4_files/Exercise_4_100_2.png)
-    
-
+![png](Report_3_files/Report_3_100_2.png)
 
 #### As we can see, there is no correlation between missingness of income and urban, so they are `MCAR`. Therefore let's imputate them with median and mode accordinly
-
 
 ```python
 carseats['Income'] = carseats['Income'].fillna(carseats['Income'].median())
@@ -1774,35 +1605,33 @@ carseats['Urban'] = carseats['Urban'].fillna(carseats['Urban'].mode())
 
 #### And lastly we can check for outliers
 
-
 ```python
 import plotly.express as px
 
 cols = ['Sales', 'CompPrice', 'Income', 'Advertising', 'Population', 'Price', 'Age', 'Education']
 
 for col in cols:
-    fig = px.box(carseats, y=col, title=f'Boxplot of {col}',labels={'y': col})
+    fig = px.box(carseats,y=col,title=f'Boxplot of {col}', labels={'y': col})
     fig.show()
 ```
 
+![Boxplot Sales](Report_3_files/Sales_with_outliers.png)
 
+![Boxplot CompPrice](Report_3_files/CompPrice_with_outliers.png)
 
+![Boxplot Income](Report_3_files/Income_with_outliers.png)
 
+![Boxplot Advertising](Report_3_files/Advertising_with_outliers.png)
 
+![Boxplot Population](Report_3_files/Population_with_outliers.png)
 
+![Boxplot Price](Report_3_files/Price_with_outliers.png)
 
+![Boxplot Age](Report_3_files/Age_with_outliers.png)
 
-
-
-
-
-
-
-
-
+![Boxplot Education](Report_3_files/Education_with_outliers.png)
 
 #### As we can see there 3 columns with outliers but there not so many of them so let's drop them
-
 
 ```python
 def drop_by_iqr(data, column):
@@ -1816,34 +1645,33 @@ def drop_by_iqr(data, column):
     return data
 ```
 
-
 ```python
 carseats = drop_by_iqr(carseats, 'Sales')
 carseats = drop_by_iqr(carseats, 'CompPrice')
 carseats = drop_by_iqr(carseats, 'Price')
 ```
 
-
 ```python
 for col in cols:
     fig = px.box(carseats, y=col,title=f'Boxplot of {col}',labels={'y': col})
     fig.show()
+  
 ```
 
+![Boxplot Sales](Report_3_files/Sales_without_outliers.png)
 
+![Boxplot CompPrice](Report_3_files/CompPrice_without_outliers.png)
 
+![Boxplot Income](Report_3_files/Income_without_outliers.png)
 
+![Boxplot Advertising](Report_3_files/Advertising_without_outliers.png)
 
+![Boxplot Population](Report_3_files/Population_without_outliers.png)
 
+![Boxplot Price](Report_3_files/Price_without_outliers.png)
 
+![Boxplot Age](Report_3_files/Age_without_outliers.png)
 
-
-
-
-
-
-
-
-
+![Boxplot Education](Report_3_files/Education_without_outliers.png)
 
 ### So now carseats dataframe is ready to analysis.
