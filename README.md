@@ -1,4 +1,4 @@
-Team Leader: Błażej Pituła \
+Team Leader: Błażej Pituła 
 Collaborator: Adam Piotrowski
 
 # Reports:
@@ -7,3 +7,4 @@ Collaborator: Adam Piotrowski
 
 [Report 2 - Data wrangling](Reports/Report_2.md)
 
+[Report 3 - Data Cleansing](Reports/Report_3.md)
