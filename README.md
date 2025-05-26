@@ -1,4 +1,4 @@
-Team Leader: Błażej Pituła 
+Team Leader: Błażej Pituła
 Collaborator: Adam Piotrowski
 
 # Reports:
@@ -12,3 +12,5 @@ Collaborator: Adam Piotrowski
 [Report 4 - Data Visualization](Reports/Report_4.md)
 
 [Report 5 - Univariate Analysis](Reports/Report_5.md)
+
+[Report 6 - Bivariate Statistics](Reports/Report_6.md)
