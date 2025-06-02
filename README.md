@@ -14,3 +14,5 @@ Collaborator: Adam Piotrowski
 [Report 5 - Univariate Analysis](Reports/Report_5.md)
 
 [Report 6 - Bivariate Statistics](Reports/Report_6.md)
+
+[Report 7 - Regression Analysis](Reports/Report_7.md)
